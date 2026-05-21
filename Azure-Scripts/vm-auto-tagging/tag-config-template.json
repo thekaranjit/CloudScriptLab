@@ -1,0 +1,125 @@
+{
+  "tagScenarios": [
+    {
+      "name": "Production Environment",
+      "description": "Tags for production VMs - high priority, critical monitoring",
+      "tags": {
+        "Environment": "Production",
+        "Owner": "PlatformTeam",
+        "CostCenter": "Operations",
+        "MonitoringLevel": "High",
+        "BackupRequired": "Yes",
+        "DataClassification": "Confidential",
+        "ApprovalStatus": "Approved"
+      }
+    },
+    {
+      "name": "Development Environment",
+      "description": "Tags for development VMs - auto-shutdown enabled, lower costs",
+      "tags": {
+        "Environment": "Development",
+        "Owner": "EngineersTeam",
+        "CostCenter": "Engineering",
+        "AutoShutdown": "Yes",
+        "MonitoringLevel": "Low",
+        "BackupRequired": "No",
+        "DeleteIfUnused": "After-30-days"
+      }
+    },
+    {
+      "name": "Testing Environment",
+      "description": "Tags for staging/testing VMs",
+      "tags": {
+        "Environment": "Testing",
+        "Owner": "QATeam",
+        "CostCenter": "Quality",
+        "MonitoringLevel": "Medium",
+        "BackupRequired": "No",
+        "AutoShutdown": "Yes"
+      }
+    },
+    {
+      "name": "Cost Allocation Tags",
+      "description": "Tags for tracking costs by department",
+      "tags": {
+        "CostCenter": "Engineering",
+        "Department": "DevOps",
+        "Project": "WebPlatform",
+        "BillingCode": "CC-2024-001"
+      }
+    },
+    {
+      "name": "Compliance & Governance",
+      "description": "Tags for compliance requirements",
+      "tags": {
+        "Compliance": "GDPR",
+        "DataOwner": "PrivacyTeam",
+        "RetentionDays": "365",
+        "AuditRequired": "Yes",
+        "ComplianceLevel": "PCI-DSS"
+      }
+    },
+    {
+      "name": "Operational Tags",
+      "description": "Tags for operational management",
+      "tags": {
+        "ManagedBy": "Terraform",
+        "BackupPolicy": "Daily",
+        "MaintenanceWindow": "Sunday-02:00-UTC",
+        "HealthCheckInterval": "5minutes",
+        "AlertingLevel": "Critical",
+        "RunbookLink": "https://wiki.company.com/runbooks/vm-troubleshooting"
+      }
+    },
+    {
+      "name": "Minimal Tags",
+      "description": "Absolute minimum required tags",
+      "tags": {
+        "Environment": "Production",
+        "Owner": "TeamName",
+        "CostCenter": "Department"
+      }
+    }
+  ],
+  "tagNamingConventions": {
+    "keyFormat": "PascalCase",
+    "keyDescription": "Tag keys should use PascalCase (e.g., 'Environment', 'CostCenter')",
+    "valueFormat": "Specific to each tag",
+    "examples": {
+      "Environment": ["Production", "Development", "Testing", "Staging"],
+      "Owner": ["TeamName", "IndividualName", "Department"],
+      "CostCenter": ["Engineering", "Operations", "Marketing", "Sales"],
+      "MonitoringLevel": ["High", "Medium", "Low"],
+      "BackupRequired": ["Yes", "No"],
+      "AutoShutdown": ["Yes", "No"],
+      "DataClassification": ["Public", "Internal", "Confidential", "Restricted"]
+    }
+  },
+  "importantNotes": [
+    "Azure allows maximum 50 tags per resource",
+    "Tag keys are case-insensitive but case-preserving",
+    "Tag values are case-sensitive",
+    "Avoid spaces in keys; use hyphens or underscores instead",
+    "Tag keys can be up to 512 characters",
+    "Tag values can be up to 256 characters",
+    "Special characters in tags may cause issues with some Azure services"
+  ],
+  "powerShellUsageExamples": [
+    {
+      "title": "Apply Production Tags to All VMs",
+      "code": "$tags = @{\n  'Environment' = 'Production'\n  'Owner' = 'PlatformTeam'\n  'CostCenter' = 'Operations'\n  'MonitoringLevel' = 'High'\n}\n\n.\\Apply-AzureVMTags.ps1 -Tags $tags -DryRun"
+    },
+    {
+      "title": "Apply Development Tags to VMs Matching Pattern",
+      "code": "$tags = @{\n  'Environment' = 'Development'\n  'Owner' = 'EngineersTeam'\n  'AutoShutdown' = 'Yes'\n}\n\n.\\Apply-AzureVMTags.ps1 -Tags $tags -VMNameFilter 'dev-*' -ResourceGroupName 'dev-rg'"
+    },
+    {
+      "title": "Apply Tags to Specific Resource Group Only",
+      "code": "$tags = @{\n  'Environment' = 'Testing'\n  'Owner' = 'QATeam'\n  'CostCenter' = 'Quality'\n}\n\n.\\Apply-AzureVMTags.ps1 -Tags $tags -ResourceGroupName 'qa-resources'"
+    },
+    {
+      "title": "Apply Tags to Specific Subscription",
+      "code": "$tags = @{\n  'ManagedBy' = 'Terraform'\n  'Environment' = 'Production'\n}\n\n.\\Apply-AzureVMTags.ps1 `\n  -Tags $tags `\n  -SubscriptionId '12345678-1234-1234-1234-123456789012'"
+    }
+  ]
+}
